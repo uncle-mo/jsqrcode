@@ -22,18 +22,30 @@
          <script type="text/javascript" src="src/databr.js"></script>
          <input type="file" id="file" name="file" accept="image/*" capture="camera" class="fileselect">
          <input type="button" onclick="displayQRData()" value="Proccess"/>
+         <div id="QRCodeDetails">
+         </div>
          <script type="text/javascript">
             /* callback */
             qrcode.callback = qrCallback;
             function qrCallback(data) {
                 console.log(data);
+                qrCodeDetails = document.getElementById('QRCodeDetails');
+
+                var qrLink = document.createElement('a');
+                qrLink.setAttribute('href', data);
+                qrLink.innerHTML = data;
+                qrCodeDetails.appendChild(qrLink)
+                qrCodeDetails.appendChild(document.createElement('br'));
+
             }
 
             function displayQRData() {
                  data_url = document.getElementById('file').files[0]; //canvas.toDataURL('image/png');
                  //console.log(data_url);
+                 if (data_url) {
                  data_url = window.URL.createObjectURL(data_url);
                  qrcode.decode(data_url);
+                 }
             }
          </script>
      </body>
